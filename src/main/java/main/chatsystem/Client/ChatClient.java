@@ -4,14 +4,16 @@ import main.chatsystem.Model.User;
 
 import java.io.IOException;
 import java.beans.PropertyChangeListener;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
-public interface ChatClient {
-    void disconnect() throws IOException;
-    boolean login(String username, String password) throws IOException;
-    void sendMessage(String message, User user) throws IOException;
+public interface ChatClient extends Remote {
+    void disconnect() throws RemoteException;
+    boolean login(String username, String password) throws RemoteException;
+    void sendMessage(String message, User user) throws RemoteException;
 
-    void addUser(User user) throws IOException;
-    void addPropertyChangeListener(PropertyChangeListener listener);
-    void removePropertyChangeListener(PropertyChangeListener listener);
-    void receiveBroadcast(String message);
+    void addUser(User user) throws RemoteException;
+    void addPropertyChangeListener(PropertyChangeListener listener ) throws RemoteException;
+    void removePropertyChangeListener(PropertyChangeListener listener) throws RemoteException;
+    void receiveBroadcast(String message) throws RemoteException;
 }

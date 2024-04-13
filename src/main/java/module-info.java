@@ -3,7 +3,7 @@ module main.chatsystem {
     requires javafx.fxml;
     requires com.google.gson;
     requires java.desktop;
-
+    requires java.rmi;
 
 
     opens main.chatsystem to javafx.fxml;

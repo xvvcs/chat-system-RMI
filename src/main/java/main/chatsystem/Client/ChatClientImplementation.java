@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.rmi.RemoteException;
 
 public class ChatClientImplementation implements ChatClient {
     private final Socket socket;
@@ -24,7 +25,7 @@ public class ChatClientImplementation implements ChatClient {
     private String nickname;
 
 
-    public ChatClientImplementation(String host, int port) throws IOException {
+    public ChatClientImplementation(String host, int port) throws RemoteException {
         socket = new Socket(host, port);
         writer = StreamsFactory.createWriter(socket);
         reader = StreamsFactory.createReader(socket);
@@ -38,14 +39,14 @@ public class ChatClientImplementation implements ChatClient {
     }
 
     @Override
-    public synchronized void disconnect() throws IOException {
+    public synchronized void disconnect() throws RemoteException {
         writer.println("Disconnect");
         writer.flush();
         String reply = reader.readLine();
         String userLeft = nickname + " has left the chat.";
 
         if (!reply.equals("Disconnected")) {
-            throw new IOException("Protocol failure");
+            throw new RemoteException("Protocol failure");
         }
 
         Message message = new Message(userLeft);
@@ -57,7 +58,7 @@ public class ChatClientImplementation implements ChatClient {
     }
 
     @Override
-    public synchronized boolean login(String username, String password) throws IOException {
+    public synchronized boolean login(String username, String password) throws RemoteException {
         writer.println("connect");
         writer.flush();
         String reply = reader.readLine();
@@ -78,7 +79,7 @@ public class ChatClientImplementation implements ChatClient {
     }
 
     @Override
-    public synchronized void sendMessage(String messageContent, User user) throws IOException {
+    public synchronized void sendMessage(String messageContent, User user) throws RemoteException {
 
         writer.println("Send message");
         writer.flush();
@@ -108,7 +109,7 @@ public class ChatClientImplementation implements ChatClient {
     }
 
     @Override
-    public void addUser(User user) throws IOException {
+    public void addUser(User user) throws RemoteException {
         String userJSON = gson.toJson(user + "joined chat with ip: " + socket.getInetAddress());
 
         writer.println(userJSON);
@@ -119,17 +120,17 @@ public class ChatClientImplementation implements ChatClient {
     }
 
     @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    public void addPropertyChangeListener(PropertyChangeListener listener) throws RemoteException {
         support.addPropertyChangeListener(listener);
     }
 
     @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
+    public void removePropertyChangeListener(PropertyChangeListener listener) throws RemoteException{
         support.removePropertyChangeListener(listener);
     }
 
     @Override
-    public synchronized void receiveBroadcast(String message) {
+    public synchronized void receiveBroadcast(String message) throws RemoteException {
         try {
 
             Message messageObject = gson.fromJson(message, Message.class);
