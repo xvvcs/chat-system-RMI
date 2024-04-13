@@ -1,8 +1,7 @@
 package main.chatsystem.Server;
 
-import main.chatsystem.Client.ChatClientImplementation;
+import main.chatsystem.Client.Listener;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.rmi.Remote;
 import java.rmi.registry.LocateRegistry;
@@ -14,11 +13,9 @@ public class ChatServer {
     {
 
         System.out.println("Starting Server...");
-        System.out.println("Server IP: " + InetAddress.getLocalHost().getHostAddress() + " with port: 5678");
-
         Registry registry = LocateRegistry.createRegistry(1099);
-        ChatClientImplementation chat = new ChatClientImplementation(); // >>
-        Remote stub = UnicastRemoteObject.exportObject(chat,5678);
+        ChatImplementation chat = new ChatImplementation(); // >>
+        Remote stub = UnicastRemoteObject.exportObject(chat,0);
         registry.bind("chat",stub);
         System.out.println("Server is running");
 

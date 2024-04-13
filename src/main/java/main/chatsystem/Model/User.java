@@ -15,6 +15,9 @@ public record User(@SerializedName("nickname") String nickname, @SerializedName(
         return password;
     }
 
+
+
+
     @Override public String toString()
     {
         return "User{" + "nickname='" + nickname + '\'' + ", password='" + password + '\'' + '}';

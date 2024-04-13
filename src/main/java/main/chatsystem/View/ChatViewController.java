@@ -13,7 +13,7 @@ public class ChatViewController {
     @FXML private Button sendButton;
     @FXML private Button informationButton;
     @FXML private Button disconnectButton;
-    @FXML private ListView<Message> chatArea;
+    @FXML private ListView<String> chatArea;
     private ViewHandler viewHandler;
     private ChatViewModel chatViewModel;
     private Region root;

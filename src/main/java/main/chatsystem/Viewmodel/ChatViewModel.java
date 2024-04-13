@@ -15,7 +15,8 @@ import java.beans.PropertyChangeSupport;
 public class ChatViewModel implements PropertyChangeListener {
     private final Model model;
     private User user;
-    private final ListProperty<Message> messages;
+    private Message messageObject;
+    private final ListProperty<String> messages;
     private final SimpleStringProperty message;
     private StringProperty error;
     private final PropertyChangeSupport support;
@@ -56,8 +57,8 @@ public class ChatViewModel implements PropertyChangeListener {
         }
     }
     public void addMessage(String message){
-        Message messageNew = new Message(message);
-        messages.add(messageNew);
+        //Message messageNew = new Message(message,user);
+        messages.add(message);
     }
     public void disconnect()
     {
@@ -71,7 +72,7 @@ public class ChatViewModel implements PropertyChangeListener {
             error.setValue(e.getMessage());
         }
     }
-    public void bindMessageList(ObjectProperty<ObservableList<Message>> property)
+    public void bindMessageList(ObjectProperty<ObservableList<String>> property)
     {
         messages.bind(property);
     }
@@ -95,9 +96,9 @@ public class ChatViewModel implements PropertyChangeListener {
                 user = (User) evt.getNewValue();
                 support.firePropertyChange("UserLoggedIn", null, user);
             }
-            else if (evt.getPropertyName().equals(("broadcast"))){
-                Message message1 = (Message) evt.getNewValue();
-                messages.add(message1);
+            else if (evt.getPropertyName().equals(("MessageSent"))){
+                messageObject = (Message) evt.getNewValue();
+                messages.add(messageObject.message());
             }
 
         });

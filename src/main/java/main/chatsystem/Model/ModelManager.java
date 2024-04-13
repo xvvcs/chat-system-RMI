@@ -3,7 +3,7 @@ package main.chatsystem.Model;
 
 import javafx.application.Platform;
 import main.chatsystem.Client.ChatClient;
-import main.chatsystem.Client.ChatClientImplementation;
+import main.chatsystem.Server.ChatImplementation;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -15,9 +15,8 @@ public class ModelManager implements Model, PropertyChangeListener {
     private final ChatClient client;
 
     public ModelManager() throws IOException {
-        this.client = new ChatClientImplementation("localhost",5678);
+        this.client = new ChatImplementation();
         this.support = new PropertyChangeSupport(this);
-        this.client.addPropertyChangeListener(this);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class ModelManager implements Model, PropertyChangeListener {
 
     @Override
     public void sendMessage(String content, User user) throws IOException, InterruptedException {
-        Message message = new Message(content);
+        Message message = new Message(content, user);
         client.sendMessage(message.message(), user);
     }
 

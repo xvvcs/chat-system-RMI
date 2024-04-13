@@ -1,5 +1,7 @@
 package main.chatsystem.Client;
 
+import dk.via.remote.observer.RemotePropertyChangeListener;
+import main.chatsystem.Model.Message;
 import main.chatsystem.Model.User;
 
 import java.io.IOException;
@@ -8,12 +10,12 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface ChatClient extends Remote {
-    void disconnect() throws RemoteException;
-    boolean login(String username, String password) throws RemoteException;
-    void sendMessage(String message, User user) throws RemoteException;
+    void disconnect() throws RemoteException, IOException;
+   void login(String username, String password) throws RemoteException, IOException;
+    void sendMessage(String message, User user) throws RemoteException, IOException;
 
-    void addUser(User user) throws RemoteException;
-    void addPropertyChangeListener(PropertyChangeListener listener ) throws RemoteException;
-    void removePropertyChangeListener(PropertyChangeListener listener) throws RemoteException;
-    void receiveBroadcast(String message) throws RemoteException;
+    void addPropertyChangeListener(RemotePropertyChangeListener<Message> listener) throws RemoteException;
+
+    void removePropertyChangeListener(RemotePropertyChangeListener<Message> listener) throws RemoteException;
+
 }
