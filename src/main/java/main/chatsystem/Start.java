@@ -17,7 +17,7 @@ public class Start extends Application {
     public void start(Stage primaryStage) throws Exception {
         Registry registry = LocateRegistry.getRegistry(1099);
         ChatClient client = (ChatClient) registry.lookup("chat");
-        Model model = new ModelManager();
+        Model model = new ModelManager(client);
         ViewModelFactory viewModelFactory = new ViewModelFactory(model);
         ViewHandler viewHandler = new ViewHandler(viewModelFactory);
         viewHandler.start(primaryStage);

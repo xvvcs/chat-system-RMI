@@ -29,7 +29,7 @@ public class LoginViewModel implements PropertyChangeListener{
     {
         try
         {
-            model.login(userName.get(), password.get());  // model login method may be String instead of void (Olivier example)
+            model.login(userName.get(), password.get());
 
         }
         catch (Exception e)
