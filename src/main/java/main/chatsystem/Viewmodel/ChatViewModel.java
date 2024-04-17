@@ -30,7 +30,7 @@ public class ChatViewModel implements PropertyChangeListener {
         this.messages = new SimpleListProperty<>(FXCollections.observableArrayList());
         this.model.addPropertyChangeListener(this);
         this.model.addPropertyChangeListener(evt -> {
-            if (evt.getPropertyName().equals("UserLoggedIn")){
+            if (evt.getPropertyName().equals("UserLoggedIn")){ // DOESN'T EVEN GET CALLED
                 user = (User) evt.getNewValue();
             }
         });
@@ -38,6 +38,7 @@ public class ChatViewModel implements PropertyChangeListener {
     }
 
     public String getNickname(){
+        System.out.println(user.nickname() + "to nick");
         if(user!= null){
             return user.nickname();
         }
@@ -53,6 +54,7 @@ public class ChatViewModel implements PropertyChangeListener {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             error.setValue(e.getMessage());
         }
     }
@@ -92,8 +94,9 @@ public class ChatViewModel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Platform.runLater(() -> {
-            if (evt.getPropertyName().equals("UserLoggedIn")){
+            if (evt.getPropertyName().equals("UserLoggedIn")){ // DOESN'T EVEN GET CALLED
                 user = (User) evt.getNewValue();
+                System.out.println("User logged in: " + user.nickname());
                 support.firePropertyChange("UserLoggedIn", null, user);
             }
             else if (evt.getPropertyName().equals(("MessageSent"))){

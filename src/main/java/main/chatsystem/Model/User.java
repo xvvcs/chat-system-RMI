@@ -2,8 +2,9 @@ package main.chatsystem.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public record User(@SerializedName("nickname") String nickname, @SerializedName("password") String password)
-{
+import java.io.Serializable;
+
+public record User(@SerializedName("nickname") String nickname, @SerializedName("password") String password) implements Serializable {
 
     @Override public String nickname()
     {
@@ -16,7 +17,15 @@ public record User(@SerializedName("nickname") String nickname, @SerializedName(
     }
 
 
+    @Override
+    public boolean equals(Object obj) {
+        return false;
+    }
 
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 
     @Override public String toString()
     {

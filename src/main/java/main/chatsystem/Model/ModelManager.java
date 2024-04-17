@@ -36,8 +36,13 @@ public class ModelManager implements Model, PropertyChangeListener {
 
     @Override
     public void sendMessage(String content, User user) throws IOException, InterruptedException {
-        Message message = new Message(content, user);
-        client.sendMessage(message.message(), user);
+        try{
+            Message message = new Message(content, user);
+            client.sendMessage(message.message(), user);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -57,7 +62,7 @@ public class ModelManager implements Model, PropertyChangeListener {
                 support.firePropertyChange("UserAdded", null, evt.getNewValue());
             } else if ("MessageSent".equals(evt.getPropertyName())) {
                 support.firePropertyChange("MessageSent", null, evt.getNewValue());
-            } else if ("UserLoggedIn".equals(evt.getPropertyName())){
+            } else if ("UserLoggedIn".equals(evt.getPropertyName())){ // DOESN'T EVEN GET CALLED
                 support.firePropertyChange("UserLoggedIn", null, evt.getNewValue());
             } else if("broadcast".equals(evt.getPropertyName())){
                 support.firePropertyChange("broadcast",null,evt.getNewValue());

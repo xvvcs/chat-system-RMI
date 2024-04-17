@@ -14,13 +14,13 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class ChatImplementation implements ChatClient {
-    private final RemotePropertyChangeSupport<Message> support;
+    private final RemotePropertyChangeSupport support;
     private String nickname;
     private File file;
     private FileLog fileLog;
     public ChatImplementation()
     {
-        this.support = new RemotePropertyChangeSupport<>();
+        this.support = new RemotePropertyChangeSupport();
         this.file = new File("src/main/java/main/chatsystem/File/ChatLog");
         this.fileLog = FileLog.getInstance(file);
 
@@ -32,22 +32,33 @@ public class ChatImplementation implements ChatClient {
 
     @Override
     public void login(String username, String password) throws RemoteException, IOException {
-        nickname = username;
-        User userlogin = new User(username,password);
-        Message message = new Message(null, userlogin);
-        support.firePropertyChange("UserLoggedIn",null, message);
-        fileLog.log(nickname + "has connected to the server");
+        try{
+            nickname = username;
+            User userlogin = new User(username,password);
+            support.firePropertyChange("UserLoggedIn",null, userlogin);
+
+            System.out.println(userlogin + "user logged in");; // works, we can see username and pasword
+            fileLog.log(nickname + "has connected to the server");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
-    public void sendMessage(String message, User user) throws RemoteException, IOException {
-
-
-        Message message1 = new Message(message, user);
-        fileLog.log(user.nickname() + ":" + message);
-        this.support.firePropertyChange("MessageSent", null, message1);
-
-
+    public void sendMessage(String message, User user) throws RemoteException, IOException { //Doesn't work, user is null all the time
+        try {
+            if (user != null) {
+                Message message1 = new Message(message, user);
+                System.out.println(user);
+                fileLog.log(user.nickname() + ":" + message);
+                support.firePropertyChange("MessageSent", null, message1);
+            } else {
+                System.err.println("User is null. Cannot send message.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
