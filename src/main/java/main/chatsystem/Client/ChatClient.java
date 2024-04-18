@@ -10,7 +10,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface ChatClient extends Remote {
-    void disconnect() throws RemoteException, IOException;
+    void disconnect(User user) throws RemoteException, IOException;
    void login(String username, String password) throws RemoteException, IOException;
     void sendMessage(String message, User user) throws RemoteException, IOException;
 

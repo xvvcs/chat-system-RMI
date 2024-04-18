@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
 
 public class ChatImplementation implements ChatClient {
     private final RemotePropertyChangeSupport support;
-    private String nickname;
+
     private File file;
     private FileLog fileLog;
     public ChatImplementation()
@@ -26,20 +26,19 @@ public class ChatImplementation implements ChatClient {
 
     }
     @Override
-    public void disconnect() throws RemoteException, IOException {
-        support.firePropertyChange("UserLeft",null,null);
-        fileLog.log(nickname + "has disconnected");
+    public void disconnect(User user) throws RemoteException, IOException {
+        support.firePropertyChange("UserLeft",null,user);
+        fileLog.log(user.nickname() + "has disconnected");
     }
 
     @Override
     public void login(String username, String password) throws RemoteException, IOException {
         try{
-            nickname = username;
             User userlogin = new User(username,password);
             support.firePropertyChange("UserLoggedIn",null, userlogin);
 
             System.out.println(userlogin + "user logged in");; // works, we can see username and pasword
-            fileLog.log(nickname + "has connected to the server");
+            fileLog.log(username + " has connected to the server");
         }catch (Exception e){
             e.printStackTrace();
         }

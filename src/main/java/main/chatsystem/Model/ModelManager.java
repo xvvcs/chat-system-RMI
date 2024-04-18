@@ -25,9 +25,9 @@ public class ModelManager implements Model, PropertyChangeListener {
     }
 
     @Override
-    public void disconnect() throws IOException {
+    public void disconnect(User user) throws IOException {
         try{
-            this.client.disconnect();
+            this.client.disconnect(user);
         } catch (IOException e){
             throw new RuntimeException(e);
         }

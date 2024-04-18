@@ -66,7 +66,7 @@ public class ChatViewModel implements PropertyChangeListener {
     {
         try
         {
-            model.disconnect();
+            model.disconnect(user);
             message.set("");
         }
         catch (Exception e)
