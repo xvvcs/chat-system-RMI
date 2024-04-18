@@ -3,8 +3,6 @@ package main.chatsystem.View;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
-import main.chatsystem.Model.Message;
-import main.chatsystem.Model.PeopleLog;
 import main.chatsystem.Viewmodel.ChatViewModel;
 
 public class ChatViewController {

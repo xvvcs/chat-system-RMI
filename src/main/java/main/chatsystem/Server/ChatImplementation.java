@@ -42,7 +42,6 @@ public class ChatImplementation implements ChatClient {
             count++;
             support.firePropertyChange("UserCount",null,count);
 
-            System.out.println(userlogin + "user logged in");; // works, we can see username and pasword
             fileLog.log(username + " has connected to the server");
         }catch (Exception e){
             e.printStackTrace();

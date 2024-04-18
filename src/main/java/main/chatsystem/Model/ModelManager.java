@@ -35,7 +35,7 @@ public class ModelManager implements Model, PropertyChangeListener {
 
 
     public void login(String username, String password) throws IOException {
-        this.user = new User(username, password);
+        user = new User(username, password);
         client.login(username, password);
     }
 
@@ -66,10 +66,8 @@ public class ModelManager implements Model, PropertyChangeListener {
             if ("UserLeft".equals(evt.getPropertyName())) {
                 support.firePropertyChange("UserLeft", null, evt.getNewValue());
             } else if ("MessageSent".equals(evt.getPropertyName())) {
-                System.out.println("Message MODEl");
                 support.firePropertyChange("MessageSent", null, evt.getNewValue());
             } else if ("UserLoggedIn".equals(evt.getPropertyName())){
-                System.out.println("User MODEL:");// DOESN'T EVEN GET CALLED
                 support.firePropertyChange("UserLoggedIn", null, evt.getNewValue());
             } else if ("UserCount".equals(evt.getPropertyName())) {
             support.firePropertyChange("UserCount",null,evt.getNewValue());

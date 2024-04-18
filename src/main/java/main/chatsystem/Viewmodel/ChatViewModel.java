@@ -30,16 +30,17 @@ public class ChatViewModel implements PropertyChangeListener {
         this.message = new SimpleStringProperty("");
         this.messages = new SimpleListProperty<>(FXCollections.observableArrayList());
         this.model.addPropertyChangeListener(this);
+        this.support = new PropertyChangeSupport(this);
         this.model.addPropertyChangeListener(evt -> {
-            if (evt.getPropertyName().equals("UserLoggedIn")){ // DOESN'T EVEN GET CALLED
-                user = (User) evt.getNewValue();
+            if (evt.getPropertyName().equals("UserLoggedIn")){
+                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                 user = (User) evt.getNewValue();
             }
         });
-        this.support = new PropertyChangeSupport(this);
     }
 
     public String getNickname(){
-        System.out.println(user.nickname() + "to nick");
+        System.out.println(user.nickname() + " to nick");
         if(user!= null){
             return user.nickname();
         }
@@ -47,6 +48,7 @@ public class ChatViewModel implements PropertyChangeListener {
             return "";
         }
     }
+
     public void sendMessage()
     {
         try
@@ -60,7 +62,6 @@ public class ChatViewModel implements PropertyChangeListener {
         }
     }
     public void addMessage(String message){
-        //Message messageNew = new Message(message,user);
         messages.add(message);
     }
     public void disconnect()
@@ -80,9 +81,6 @@ public class ChatViewModel implements PropertyChangeListener {
         messages.bind(property);
     }
 
-    public StringProperty errorProperty() {
-        return error;
-    }
 
     public void bindMessage(StringProperty property)
     {
@@ -99,11 +97,9 @@ public class ChatViewModel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Platform.runLater(() -> {
-            if (evt.getPropertyName().equals("UserLoggedIn")){ // DOESN'T EVEN GET CALLED
-                user = (User) evt.getNewValue();
-                System.out.println("User logged in: " + user.nickname());
+            if (evt.getPropertyName().equals("UserLoggedIn")){
                 messages.add(user.nickname() + " has joined the chat");
-                support.firePropertyChange("UserLoggedIn", null, user);
+                support.firePropertyChange("UserLoggedIn", null, evt.getNewValue());
             }
             else if (evt.getPropertyName().equals(("MessageSent"))){
                 messageObject = (Message) evt.getNewValue();

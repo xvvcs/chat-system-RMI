@@ -3,6 +3,7 @@ package main.chatsystem.Model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public record User(@SerializedName("nickname") String nickname, @SerializedName("password") String password) implements Serializable {
 
@@ -18,13 +19,16 @@ public record User(@SerializedName("nickname") String nickname, @SerializedName(
 
 
     @Override
-    public boolean equals(Object obj) {
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(nickname, user.nickname) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return Objects.hash(nickname, password);
     }
 
     @Override public String toString()
