@@ -27,6 +27,7 @@ public class ChatImplementation implements ChatClient {
     }
     @Override
     public void disconnect() throws RemoteException, IOException {
+        support.firePropertyChange("UserLeft",null,null);
         fileLog.log(nickname + "has disconnected");
     }
 

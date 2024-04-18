@@ -97,11 +97,14 @@ public class ChatViewModel implements PropertyChangeListener {
             if (evt.getPropertyName().equals("UserLoggedIn")){ // DOESN'T EVEN GET CALLED
                 user = (User) evt.getNewValue();
                 System.out.println("User logged in: " + user.nickname());
+                messages.add(user.nickname() + "has joined the chat");
                 support.firePropertyChange("UserLoggedIn", null, user);
             }
             else if (evt.getPropertyName().equals(("MessageSent"))){
                 messageObject = (Message) evt.getNewValue();
-                messages.add(messageObject.message());
+                messages.add(messageObject.user().nickname() + " : " +  messageObject.message());
+            } else if(evt.getPropertyName().equals("UserLeft")){
+                messages.add(user.nickname() + "has left the chat");
             }
 
         });

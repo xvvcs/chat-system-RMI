@@ -3,6 +3,7 @@ package main.chatsystem.Model;
 
 import javafx.application.Platform;
 import main.chatsystem.Client.ChatClient;
+import main.chatsystem.Client.Listener;
 import main.chatsystem.Server.ChatImplementation;
 
 import java.beans.PropertyChangeEvent;
@@ -13,10 +14,14 @@ import java.io.IOException;
 public class ModelManager implements Model, PropertyChangeListener {
     private final PropertyChangeSupport support;
     private final ChatClient client;
+    private User user;
+    private Listener listener;
 
     public ModelManager(ChatClient client) throws IOException {
         this.client = client;
+        this.listener = new Listener(client);
         this.support = new PropertyChangeSupport(this);
+        listener.addPropertyChangeListener(this);
     }
 
     @Override
@@ -30,15 +35,15 @@ public class ModelManager implements Model, PropertyChangeListener {
 
 
     public void login(String username, String password) throws IOException {
-
+        this.user = new User(username, password);
         client.login(username, password);
     }
 
     @Override
     public void sendMessage(String content, User user) throws IOException, InterruptedException {
         try{
-            Message message = new Message(content, user);
-            client.sendMessage(message.message(), user);
+            Message message = new Message(content, this.user);
+            client.sendMessage(message.message(), this.user);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -58,14 +63,14 @@ public class ModelManager implements Model, PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Platform.runLater(() -> {
-            if ("UserAdded".equals(evt.getPropertyName())) {
-                support.firePropertyChange("UserAdded", null, evt.getNewValue());
+            if ("UserLeft".equals(evt.getPropertyName())) {
+                support.firePropertyChange("UserLeft", null, evt.getNewValue());
             } else if ("MessageSent".equals(evt.getPropertyName())) {
+                System.out.println("Message MODEl");
                 support.firePropertyChange("MessageSent", null, evt.getNewValue());
-            } else if ("UserLoggedIn".equals(evt.getPropertyName())){ // DOESN'T EVEN GET CALLED
+            } else if ("UserLoggedIn".equals(evt.getPropertyName())){
+                System.out.println("User MODEL:");// DOESN'T EVEN GET CALLED
                 support.firePropertyChange("UserLoggedIn", null, evt.getNewValue());
-            } else if("broadcast".equals(evt.getPropertyName())){
-                support.firePropertyChange("broadcast",null,evt.getNewValue());
             }
         });
     }
