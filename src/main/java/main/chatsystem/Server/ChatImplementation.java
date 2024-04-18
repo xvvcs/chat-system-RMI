@@ -18,16 +18,19 @@ public class ChatImplementation implements ChatClient {
 
     private File file;
     private FileLog fileLog;
+
+    private int count;
     public ChatImplementation()
     {
         this.support = new RemotePropertyChangeSupport();
         this.file = new File("src/main/java/main/chatsystem/File/ChatLog");
         this.fileLog = FileLog.getInstance(file);
-
     }
     @Override
     public void disconnect(User user) throws RemoteException, IOException {
         support.firePropertyChange("UserLeft",null,user);
+        count--;
+        support.firePropertyChange("UserCount",null,count);
         fileLog.log(user.nickname() + "has disconnected");
     }
 
@@ -36,6 +39,8 @@ public class ChatImplementation implements ChatClient {
         try{
             User userlogin = new User(username,password);
             support.firePropertyChange("UserLoggedIn",null, userlogin);
+            count++;
+            support.firePropertyChange("UserCount",null,count);
 
             System.out.println(userlogin + "user logged in");; // works, we can see username and pasword
             fileLog.log(username + " has connected to the server");

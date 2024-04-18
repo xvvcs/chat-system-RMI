@@ -71,7 +71,9 @@ public class ModelManager implements Model, PropertyChangeListener {
             } else if ("UserLoggedIn".equals(evt.getPropertyName())){
                 System.out.println("User MODEL:");// DOESN'T EVEN GET CALLED
                 support.firePropertyChange("UserLoggedIn", null, evt.getNewValue());
-            }
+            } else if ("UserCount".equals(evt.getPropertyName())) {
+            support.firePropertyChange("UserCount",null,evt.getNewValue());
+        }
         });
     }
 

@@ -37,6 +37,8 @@ public class Listener implements RemotePropertyChangeListener {
             } else if ("UserLoggedIn".equals(evt.getPropertyName())){
                 System.out.println("UserAdded LISTENER: " + evt.getNewValue());
                 support.firePropertyChange("UserLoggedIn", null, evt.getNewValue());
+            } else if ("UserCount".equals(evt.getPropertyName())) {
+                support.firePropertyChange("UserCount",null,evt.getNewValue());
             }
         });
 
