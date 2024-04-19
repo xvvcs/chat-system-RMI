@@ -7,6 +7,7 @@ public interface Model {
     void disconnect(User user) throws IOException;
     void login(String username, String password) throws IOException;
     void sendMessage(String message, User user) throws IOException, InterruptedException;
+    User getUser();
     void addPropertyChangeListener(PropertyChangeListener listener);
     void removePropertyChangeListener(PropertyChangeListener listener);
 }

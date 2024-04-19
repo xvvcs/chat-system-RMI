@@ -5,14 +5,22 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Objects;
 
-public record User(@SerializedName("nickname") String nickname, @SerializedName("password") String password) implements Serializable {
+public class User implements Serializable {
 
-    @Override public String nickname()
+    private String nickname;
+    private String password;
+
+    public User(String nickname, String password) {
+        this.nickname = nickname;
+        this.password = password;
+    }
+
+    public String nickname()
     {
         return nickname;
     }
 
-    @Override public String password()
+     public String password()
     {
         return password;
     }

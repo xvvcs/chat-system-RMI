@@ -12,8 +12,6 @@ import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-//TODO: Probably there is an issue with this listener that User is null all the time.
-// Probably propertyChange and support.fire... don't push info about user further.
 
 public class Listener implements RemotePropertyChangeListener {
     private PropertyChangeSupport support;
@@ -28,19 +26,7 @@ public class Listener implements RemotePropertyChangeListener {
     }
     @Override
     public void propertyChange(RemotePropertyChangeEvent evt) throws RemoteException {
-        Platform.runLater(() -> {
-            if ("UserLeft".equals(evt.getPropertyName())) {
-                support.firePropertyChange("UserLeft", null, evt.getNewValue());
-            } else if ("MessageSent".equals(evt.getPropertyName())) {
-                System.out.println("message sent LISTENER: " + evt.getNewValue());
-                support.firePropertyChange("MessageSent", null, evt.getNewValue());
-            } else if ("UserLoggedIn".equals(evt.getPropertyName())){
-                System.out.println("UserAdded LISTENER: " + evt.getNewValue());
-                support.firePropertyChange("UserLoggedIn", null, evt.getNewValue());
-            } else if ("UserCount".equals(evt.getPropertyName())) {
-                support.firePropertyChange("UserCount",null,evt.getNewValue());
-            }
-        });
+
 
     }
 }
