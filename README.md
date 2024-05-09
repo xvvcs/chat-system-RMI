@@ -1,39 +1,38 @@
-Assignment 3, SDJ2
 
-(MVVM, Observer, RMI)
+# Chat Application with RMI
 
-The assignment:
+## Overview
+This chat application is a reimplementation of Assignment 2, designed as an RMI solution. It uses the MVVM (Model-View-ViewModel) pattern, the Observer design pattern, and Singleton for logging purposes. The application consists of two main windows: the chat window and the set username/alias window.
 
-You must redesign and reimplement assignment 2 as an RMI solution.
+## Requirements
+- The application must use RMI to connect the client and server.
+- The client must be able to send messages, receive broadcasted messages, and request information from the server.
+- The server will not broadcast the requested information to other clients.
+- The application must use MVVM with at least two windows: the chat window and the set username/alias window.
+- The Observer design pattern must be used as part of the solution.
+- Singleton or Multiton must be used as a log to the server console and to file(s).
+- A class diagram must be provided, clearly identifying the MVVM, the Observer pattern, and the RMI-related classes.
 
-Requirements
 
-• The application must use RMI connecting client and server
+## Source Code
+The source code for all Java classes is included in the `src` folder.
 
-• The client must be able to 1) send messages, 2) receive messages broadcasted to all clients and 3) request an information from the server, e.g. number of connected chatters, list of connected chatters or similar. This information will not be broadcasted to other clients
+## Related Resources
+- FXML files for the chat window and the set username/alias window are located in the `resources` folder.
+- If any external jar files are used, they are included in the `lib` folder.
 
-• You must use MVVM with at least two windows. Some ideas:
+## Getting Started
+To run the chat application, follow these steps:
 
-o Actual chat window
+1. Unzip the provided `.zip` file.
+2. Open the project in your favorite Java IDE.
+3. Run the `ChatServer` and `ChatClient` classes.
+4. Enjoy chatting with your friends!
 
-o Set username / alias window
+## Contributors
+- Maciej Matuszewski (xvvcs)
+- Jakub Abramek (Richardzik)
+- Mateusz Samborski (M0dlyn)
 
-o List of friends window
-
-o Login window
-
-• You must use the Observer design pattern as part of the solution.
-
-• You must use either Singleton or Multiton as a log to the server console and to file(s). It should always be possible to find all the communication for an entire day –text, IP address, date and time
-
-• It is required to make a class diagram for the final solution (in Astah). In the diagram you must be able to identify the MVVM, the Observer pattern and the design of the RMI related classes
-
-Format
-
-It is ok to work in groups, but each of you have to hand in a single zip-file with
-
-• Class diagram (where the different patterns and the RMI classes are clearly identified)
-
-• Source code for all Java classes
-
-• Related resources like fxml files and, if used, external jar files
+## License
+This project is licensed under the MIT License - see the `LICENSE` file for details.
